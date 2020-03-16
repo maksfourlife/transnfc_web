@@ -213,6 +213,7 @@ class Route(db.Model):
     holding_id = db.Column(db.Integer, db.ForeignKey("holding.id"))
 
     transports = db.relationship("Transport", backref="route", lazy="dynamic")
+    transactions = db.relationship("Transaction", backref="route", lazy="dynamic")
 
     def __repr__(self):
         return f"\nId: {self.id}\n" \
@@ -225,14 +226,17 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     amount = db.Column(db.Integer, nullable=False)
+    type = db.Column(db.Integer, nullable=False)
     time = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
     transport_id = db.Column(db.Integer, db.ForeignKey("transport.id"))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    route_id = db.Column(db.Integer, db.ForeignKey("route.id"))
 
     def __repr__(self):
         return f"\nId: {self.id}\n" \
                f"Amount: {self.amount}\n" \
-               f"Time: {self.time}\n" \
+               f"Type: {self.type}\n" \
+               f"Time: {self.time.strftime(_DT_PATTERN)}\n" \
                f"Transport Id: {self.transport_id}\n" \
                f"User Id: {self.user_id}\n"
