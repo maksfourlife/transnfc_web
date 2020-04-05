@@ -14,13 +14,13 @@ def register():
         email = request.form["email"]
         password = request.form["pwd"]
     except:
-        return jsonify({"success": False, "message": "Corrupted data"}), 400
+        return jsonify({"success": False, "message": "Corrupted data"}), 200
 
     if len(User.query.filter_by(login=login).all()):
-        return jsonify({"success": False, "message": "Login already taken"}), 400
+        return jsonify({"success": False, "message": "Login already taken"}), 200
 
     if len(User.query.filter_by(email=email).all()):
-        return jsonify({"success": False, "message": "Email already taken"}), 400
+        return jsonify({"success": False, "message": "Email already taken"}), 200
 
     db.session.add(User(first=first, last=last, login=login, email=email, password=generate_password_hash(password)))
     db.session.commit()
@@ -39,10 +39,10 @@ def login():
 
     user = User.query.filter_by(login=login_email).first() or User.query.filter_by(email=login_email).first()
     if not user:
-        return jsonify({"success": False, "message": "No such login or email"}), 400
+        return jsonify({"success": False, "message": "No such login or email"}), 200
 
     if not check_password_hash(user.password, password):
-        return jsonify({"success": False, "message": "Incorrect password"}), 400
+        return jsonify({"success": False, "message": "Incorrect password"}), 200
 
     return jsonify({"success": True, "id": user.id, "first": user.first, "last": user.last, "login": user.login, "email": user.email, "wallet": user.wallet}), 200
 
@@ -52,11 +52,11 @@ def get_wallet():
     try:
         id = request.form["id"]
     except:
-        return jsonify({"success": False, "message": "Corrupted data"}), 400
+        return jsonify({"success": False, "message": "Corrupted data"}), 200
 
     user = User.query.get(id)
     if not user:
-        return jsonify({"success": False, "message": "No such Id"}), 400
+        return jsonify({"success": False, "message": "No such Id"}), 200
 
     return jsonify({"success": True, "wallet": user.wallet}), 200
 
@@ -67,11 +67,11 @@ def get_payments():
         id = request.form["id"]
         amount = request.form["amount"]
     except:
-        return jsonify({"success": False, "message": "Corrupted data"}), 400
+        return jsonify({"success": False, "message": "Corrupted data"}), 200
 
     user = User.query.get(id)
     if not user:
-        return jsonify({"success": False, "message": "No such Id"}), 400
+        return jsonify({"success": False, "message": "No such Id"}), 200
 
     payments = Transaction.query.filter_by(user_id=user.id).filter_by(type=0).order_by(Transaction.time.desc()).limit(amount).all()
     return jsonify({"success": True, "payments": [
@@ -85,11 +85,11 @@ def get_transactions():
         id = request.form["id"]
         amount = request.form["amount"]
     except:
-        return jsonify({"success": False, "message": "Corrupted data"}), 400
+        return jsonify({"success": False, "message": "Corrupted data"}), 200
 
     user = User.query.get(id)
     if not user:
-        return jsonify({"success": False, "message": "No such Id"}), 400
+        return jsonify({"success": False, "message": "No such Id"}), 200
 
     payments = Transaction.query.filter_by(user_id=user.id).filter_by(type=1).order_by(Transaction.time.desc()).limit(amount).all()
     return jsonify({"success": True, "payments": [
