@@ -16,14 +16,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from . import config
 
-app = Flask(__name__)
-app.config.from_object(config.Config)
-db = SQLAlchemy(app)
+application = Flask(__name__)
+application.config.from_object(config.Config)
+db = SQLAlchemy(application)
 
 from .models import *
 
 from .api.routes import api
 from .site.routes import site
 
-app.register_blueprint(api, url_prefix="/api")
-app.register_blueprint(site)
+application.register_blueprint(api, url_prefix="/api")
+application.register_blueprint(site)

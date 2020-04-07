@@ -115,11 +115,8 @@ class Holding(db.Model):
     company_name = db.Column(db.String(200), nullable=False)
     city_town = db.Column(db.String(100), nullable=False)
 
-    normal_ground = db.Column(db.Integer, nullable=False)
-    discount_ground = db.Column(db.Integer, nullable=False)
-    normal_underground = db.Column(db.Integer, nullable=False)
-    discount_underground = db.Column(db.Integer, nullable=False)
-    # TODO remove underground prices
+    normal = db.Column(db.Integer, nullable=False)
+    discount = db.Column(db.Integer, nullable=False)
     discount_seconds = db.Column(db.Integer, default=0, nullable=False)
 
     drivers = db.relationship("Driver", backref="holding", lazy="dynamic")
@@ -134,12 +131,8 @@ class Holding(db.Model):
                f"Legal entity: {self.legal_entity}\n" \
                f"Prices:\n" \
                f"\tDiscount seconds: {self.discount_seconds}\n" \
-               f"\tGround:\n" \
-               f"\t\tNormal: {self.normal_ground}\n" \
-               f"\t\tDiscount: {self.discount_ground}\n" \
-               f"\tUnderground:\n" \
-               f"\t\tNormal: {self.normal_underground}\n" \
-               f"\t\tDiscount: {self.discount_underground}\n"
+               f"\tNormal: {self.normal}\n" \
+               f"\tDiscount: {self.discount}\n"
 
 
 class Transport(db.Model):
@@ -147,7 +140,7 @@ class Transport(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     type = db.Column(db.Integer, nullable=False)
-    # TODO add name
+    real_id = db.Column(db.Integer, nullable=True)
 
     route_id = db.Column(db.Integer, db.ForeignKey("route.id"))
     holding_id = db.Column(db.Integer, db.ForeignKey("holding.id"))

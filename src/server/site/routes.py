@@ -1,6 +1,4 @@
-from flask import Blueprint, render_template
-
-site = Blueprint("site", __name__)
+from . import site, render_template
 
 
 @site.route('/', methods=['GET'])

@@ -123,10 +123,10 @@ def pay():
     if not holding:
         return jsonify({'success': False, 'message': 'No such holding'}), 200
 
-    price = holding.normal_ground
+    price = holding.normal
     last_payment = user.transactions.filter_by(type=0).order_by(Transaction.time.desc()).first()
     if last_payment and dt.now().timestamp() - last_payment.time.timestamp() <= holding.discount_seconds:
-        price = holding.discount_ground
+        price = holding.discount
     user.wallet -= price
 
     transaction = Transaction(amount=price, type=0)

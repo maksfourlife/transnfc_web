@@ -1,4 +1,4 @@
-@import "{{ url_for('static', 'styles/fonts.css') }}";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto+Mono:wght@300;400;700&display=swap');
 
 :root {
 
@@ -34,6 +34,14 @@
 
     --right-padding: 5%;
     --left-padding: 5%;
+
+    --roboto-mono: "Roboto Mono", monospace;
+    --montserrat: "Montserrat", sans-serif;
+    
+    --light: 300;
+    --regular: 400;
+    --semi-bold: 600;
+    --bold: 700;
 }
 
 * {
@@ -78,7 +86,10 @@ body::-webkit-scrollbar {
 }
 
 .header > .logo > * {
-    font-family: "Montserrat Bold";
+    
+    
+    font-family: var(--montserrat);
+    font-weight: var(--regular);
     font-size: var(--logo-size);
 }
 
@@ -97,7 +108,9 @@ body::-webkit-scrollbar {
 }
 
 .header > .options > span.option > a {
-    font-family: "RobotoMono Regular";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--regular);
     font-size: var(--options-size);
     color: var(--text-color);
     text-decoration: none;
@@ -135,7 +148,9 @@ body::-webkit-scrollbar {
 }
 
 .content > .block > .text h1 {
-    font-family: "Montserrat SemiBold";
+    
+    font-family: var(--montserrat);
+    font-weight: var(--semi-bold);
     font-size: var(--block-h1-size);
     margin-bottom: 50px;
 }
@@ -145,7 +160,9 @@ body::-webkit-scrollbar {
 }
 
 .content > .block > .text h2, h3 {
-    font-family: "RobotoMono Bold";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--bold);
 }
 
 .content > .block > .text h2 {
@@ -216,14 +233,18 @@ body::-webkit-scrollbar {
 }
 
 .footer > .blocks h1 {
-    font-family: "RobotoMono Regular";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--regular);
     font-size: var(--footer-h1-size);
     color: var(--text-color);
     margin-bottom: 20px;
 }
 
 .footer > .blocks h2 {
-    font-family: "RobotoMono Thin";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--light);
     font-size: var(--footer-h2-size);
     color: var(--text-color);
     text-align: center;
@@ -238,7 +259,9 @@ body::-webkit-scrollbar {
     background-color: transparent;
     border: none;
     color: var(--text-color);
-    font-family: "RobotoMono Regular";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--regular);
     font-size: var(--footer-email-form-size);
 }
 
@@ -255,7 +278,9 @@ body::-webkit-scrollbar {
     background-color: transparent;
     border: none;
     color: var(--text-color);
-    font-family: "RobotoMono Regular";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--regular);
     font-size: var(--footer-email-form-size);
 }
 
@@ -272,7 +297,9 @@ body::-webkit-scrollbar {
 }
 
 .footer > .copy {
-    font-family: "RobotoMono Thin";
+    
+    font-family: var(--roboto-mono);
+    font-weight: var(--light);
     font-size: var(--footer-copy-size);
     color: var(--text-color);
     text-align: center;
