@@ -1,0 +1,280 @@
+@import "{{ url_for('static', 'styles/fonts.css') }}";
+
+:root {
+
+    --primary-dark: #3C4245;
+    --secondary-dark: #5F6769;
+    --primary-blue: #3C5E75;
+    --secondary-blue: #507491;
+    --text-color: #F6F6F6;
+
+    --header-height: 10%;
+    --footer-height: 30%;
+
+    --underline-height: 2px;
+
+    --block-margin-top: 30px;
+    --block-margin-bottom: 200px;
+    --footer-margin-top: 200px;
+
+    --logo-size: 80px;
+    --options-size: 32px;
+    --block-h1-size: 58px;
+    --block-h2-size: 34px;
+    --block-h3-size: 30px;
+    --footer-copy-size: 30px;
+    --footer-h1-size: 36px;
+    --footer-h2-size: 33px;
+    --footer-email-form-size: 36px;
+
+    --block-hand-size: 380px;
+    --block-bus-size: 500px;
+
+    --block-bus-text-padding: 100px;
+
+    --right-padding: 5%;
+    --left-padding: 5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: var(--primary-dark);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.content {
+    flex: 1;
+    padding-left: var(--right-padding);
+    padding-right: var(--left-padding);
+}
+
+.header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+}
+
+.header > .logo {
+    flex: 1;
+    cursor: pointer;
+}
+
+.header > .options {
+    flex: 1;
+}
+
+.header > .logo > * {
+    font-family: "Montserrat Bold";
+    font-size: var(--logo-size);
+}
+
+.header > .logo > .trans {
+    color: var(--primary-blue);
+}
+
+.header > .logo > .nfc {
+    color: var(--secondary-blue);
+}
+
+.header > .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header > .options > span.option > a {
+    font-family: "RobotoMono Regular";
+    font-size: var(--options-size);
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.header > .options > span.option > a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: var(--underline-height);
+    background-color: var(--text-color);
+    transition: ease-in-out width 300ms;
+}
+
+.header > .options > span.option > a:hover::after {
+    width: 100%;
+}
+
+.header ~ .block {
+    margin-top: var(--block-margin-top);
+}
+
+.content > .block {
+    margin-bottom: var(--block-margin-bottom);
+    align-items: flex-end;
+    display: flex;
+}
+
+.content > .block > .text {
+    flex: 2;
+}
+
+.content > .block > .text h1, h2, h3 {
+    color: var(--text-color);
+}
+
+.content > .block > .text h1 {
+    font-family: "Montserrat SemiBold";
+    font-size: var(--block-h1-size);
+    margin-bottom: 50px;
+}
+
+.content > .block > .text h1 ~ h2, h3 {
+    margin-top: 70px;
+}
+
+.content > .block > .text h2, h3 {
+    font-family: "RobotoMono Bold";
+}
+
+.content > .block > .text h2 {
+    font-size: var(--block-h2-size);
+    margin-bottom: 30px;
+}
+
+.content > .block > .text h2 ~ h3 {
+    margin-top: 100px;
+}
+
+.content > .block > .text h3 {
+    font-size: var(--block-h3-size);
+}
+
+.content > .block .mark {
+    color: var(--secondary-blue);
+}
+
+.content > .block > .img {
+    flex: 1;
+    display: flex;
+}
+
+.content > .hand > .img {
+    justify-content: flex-end;
+}
+
+.content > .hand > .img > img {
+    width: var(--block-hand-size);
+    height: auto;
+}
+
+.content > .bus > .img {
+    justify-content: flex-start;
+}
+
+.content > .bus > .img > img {
+    width: var(--block-bus-size);
+    height: auto;
+}
+
+.content > .bus > .text {
+    margin-left: 100px;
+}
+
+.content > .bus > .text > h1 {
+    text-align: end;
+}
+
+.footer {
+    margin-top: var(--footer-margin-top);
+    background-color: var(--secondary-dark);
+    min-height: var(--footer-height);
+    display: flex;
+    flex-direction: column;
+}
+
+.footer > .blocks {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+.footer > .blocks > * {
+    text-align: center;
+}
+
+.footer > .blocks h1 {
+    font-family: "RobotoMono Regular";
+    font-size: var(--footer-h1-size);
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.footer > .blocks h2 {
+    font-family: "RobotoMono Thin";
+    font-size: var(--footer-h2-size);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.footer > .blocks > .contact {
+    display: flex;
+    justify-content: end;
+}
+
+.footer > .blocks > .subscribe input {
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: "RobotoMono Regular";
+    font-size: var(--footer-email-form-size);
+}
+
+.footer > .blocks > .subscribe input::placeholder {
+    color: var(--text-color);
+}
+
+.footer > .blocks > .subscribe input:focus {
+    outline: none;
+}
+
+.footer > .blocks > .subscribe button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: "RobotoMono Regular";
+    font-size: var(--footer-email-form-size);
+}
+
+.footer > .blocks > .subscribe button:focus {
+    outline: none;
+}
+
+.footer > .blocks > .subscribe .email-form::after {
+    content: "";
+    display: block;
+    height: var(--underline-height);
+    width: 100%;
+    background-color: var(--text-color);
+}
+
+.footer > .copy {
+    font-family: "RobotoMono Thin";
+    font-size: var(--footer-copy-size);
+    color: var(--text-color);
+    text-align: center;
+    margin: 10px 0 10px 0;
+}

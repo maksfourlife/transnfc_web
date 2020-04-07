@@ -1,15 +1,8 @@
-from . import db
+from . import db, generate_token
 from datetime import datetime
 from secrets import token_bytes
 
 _DT_PATTERN = "%A, %d. %B %Y %H:%M"
-_BYTES_SIZE = 16
-
-
-def generate_token():
-    token = token_bytes(_BYTES_SIZE)
-    mod = round(datetime.now().timestamp() * 100) % 0xff
-    return "".join(map(lambda x: hex(x ^ mod)[2:], token))
 
 
 class User(db.Model):
@@ -126,6 +119,7 @@ class Holding(db.Model):
     discount_ground = db.Column(db.Integer, nullable=False)
     normal_underground = db.Column(db.Integer, nullable=False)
     discount_underground = db.Column(db.Integer, nullable=False)
+    # TODO remove underground prices
     discount_seconds = db.Column(db.Integer, default=0, nullable=False)
 
     drivers = db.relationship("Driver", backref="holding", lazy="dynamic")
@@ -141,11 +135,11 @@ class Holding(db.Model):
                f"Prices:\n" \
                f"\tDiscount seconds: {self.discount_seconds}\n" \
                f"\tGround:\n" \
-               f"\t\tNormal: {self.normal_price_ground}\n" \
-               f"\t\tDiscount: {self.discount_price_ground}\n" \
+               f"\t\tNormal: {self.normal_ground}\n" \
+               f"\t\tDiscount: {self.discount_ground}\n" \
                f"\tUnderground:\n" \
-               f"\t\tNormal: {self.normal_price_underground}\n" \
-               f"\t\tDiscount: {self.discount_price_underground}\n"
+               f"\t\tNormal: {self.normal_underground}\n" \
+               f"\t\tDiscount: {self.discount_underground}\n"
 
 
 class Transport(db.Model):
@@ -153,6 +147,7 @@ class Transport(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     type = db.Column(db.Integer, nullable=False)
+    # TODO add name
 
     route_id = db.Column(db.Integer, db.ForeignKey("route.id"))
     holding_id = db.Column(db.Integer, db.ForeignKey("holding.id"))
@@ -172,6 +167,7 @@ class Chip(db.Model):
     __tablename__ = "chip"
     id = db.Column(db.Integer, primary_key=True)
 
+    key = db.Column(db.String(32), nullable=False)
     installed = db.Column(db.Boolean, default=False, nullable=False)
 
     transport_id = db.Column(db.Integer, db.ForeignKey("transport.id"))

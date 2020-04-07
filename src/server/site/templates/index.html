@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}"/>
+    <title>transnfc</title>
+</head>
+<body>
+    <div class="content">
+        <div class="header">
+            <div class="logo">
+                <span class="trans">trans</span>
+                <span class="nfc">nfc</span>
+            </div>
+            <div class="options">
+                <span class="option under"><a href="#">главная</a></span>
+                <span class="option"><a href="#">описание</a></span>
+                <span class="option"><a href="#">контакты</a></span>
+                <span class="option"><a href="#">войти</a></span>
+            </div>
+        </div>
+        <div class="block hand">
+            <div class="text">
+                <h1>О проекте</h1>
+                <h2>
+                    <span class="mark">Наша</span> задача
+                    - упростить жизнь
+                    <span class="mark">пользователям</span> общественного
+                    транспорта во всех регионах
+                    <span class="mark">России</span>.
+                </h2>
+                <h3>
+                    Представленное
+                    <span class="mark">решение</span>
+                    позволяет
+                    <span class="mark">быстро</span> и
+                    <span class="mark">удобно</span>
+                    осуществлять
+                    оплату проезда, используя
+                    мобильное приложение,
+                    доступное для мобильных устройств
+                    с технологией
+                    <span class="mark">NFC</span>.
+                </h3>
+            </div>
+            <div class="img">
+                <img src="{{ url_for('static', filename='images/handphone.png') }}">
+            </div>
+        </div>
+        <div class="block bus">
+            <div class="img">
+                <img src="{{ url_for('static', filename='images/bus.png') }}">
+            </div>
+            <div class="text">
+                <h1><span class="mark">Наши</span> преимущества</h1>
+                <h2>* Удобно - <span class="mark">не</span> нужно иметь
+                при себе никаких
+                <span class="mark">карт</span>
+                или <span class="mark">наличных</span> денег</h2>
+                <h2>* Быстро - оплата
+                    происходит в <span class="mark">один</span> клик</h2>
+                <h2>* Экономично - установка системы
+                    значительно <span class="mark">дешевле</span> всех
+                    имеющихся <span class="mark">аналогов</span></h2>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="blocks">
+            <div class="block contact">
+                <div class="container">
+                    <h1>Свяжитесь с нами</h1>
+                    <h2>support@transnfc.com</h2>
+                    <h2>+7(777)77-77-77</h2>
+                </div>
+            </div>
+            <div class="block subscribe">
+                <div class="container">
+                    <h1>Подпишитесь на рассылку</h1>
+                    <div class="email-form">
+                        <form action="#">
+                            <input type="text" placeholder="Email">
+                            <button>></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy">&copy 2020 transnfc</div>
+    </div>
+</body>
+</html>

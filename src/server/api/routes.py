@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_bcrypt import generate_password_hash, check_password_hash
-from .. import db, User, Transaction
+from .. import db, User, Transaction, Chip, generate_token
+import datetime as dt
 
-api = Blueprint(__name__, "api")
+api = Blueprint("api", __name__)
 
 
 @api.route("/register", methods=["POST", "GET"])
@@ -95,3 +96,45 @@ def get_transactions():
     return jsonify({"success": True, "payments": [
         {"time": payment.time.timestamp(), "amount": payment.amount} for payment in payments
     ]}), 200
+
+
+@api.route('/generate_token', methods=['POST', 'GET'])
+def _generate_token():
+    return generate_token(), 200
+
+
+@api.route('/pay', methods=['POST'])
+def pay():
+    try:
+        id = request.form['id']
+        key = request.form['key']
+    except:
+        return jsonify({'success': False, 'message': 'Corrupted data'}), 200
+
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"success": False, "message": "No such Id"}), 200
+
+    chip = Chip.query.filter_by(key=key).first()
+    if not chip:
+        return jsonify({'success': False, 'message': 'No such chip'}), 200
+
+    holding = chip.transport.holding.query.first()
+    if not holding:
+        return jsonify({'success': False, 'message': 'No such holding'}), 200
+
+    price = holding.normal_ground
+    last_payment = user.transactions.filter_by(type=0).order_by(Transaction.time.desc()).first()
+    if last_payment and dt.now().timestamp() - last_payment.time.timestamp() <= holding.discount_seconds:
+        price = holding.discount_ground
+    user.wallet -= price
+
+    transaction = Transaction(amount=price, type=0)
+    user.transactions.append(transaction)
+    chip.transport.transactions.append(transaction)
+    chip.transport.route.transactions.append(transaction)
+
+    db.session.commit()
+
+    return jsonify({'success': True}), 200
+
