@@ -38,14 +38,17 @@ def login():
     except:
         return jsonify({"success": False, "message": "Corrupted data"})
 
-    user = User.query.filter_by(login=login_email).first() or User.query.filter_by(email=login_email).first()
-    if not user:
-        return jsonify({"success": False, "message": "No such login or email"}), 200
+    try:
+        user = User.query.filter_by(login=login_email).first() or User.query.filter_by(email=login_email).first()
+        if not user:
+            return jsonify({"success": False, "message": "No such login or email"}), 200
 
-    if not check_password_hash(user.password, password):
-        return jsonify({"success": False, "message": "Incorrect password"}), 200
+        if not check_password_hash(user.password, password):
+            return jsonify({"success": False, "message": "Incorrect password"}), 200
 
-    return jsonify({"success": True, "id": user.id, "first": user.first, "last": user.last, "login": user.login, "email": user.email, "wallet": user.wallet}), 200
+        return jsonify({"success": True, "id": user.id, "first": user.first, "last": user.last, "login": user.login, "email": user.email, "wallet": user.wallet}), 200
+    except Exception as e:
+        return str(e)
 
 
 @api.route("/get_wallet", methods=["POST", "GET"])
@@ -124,8 +127,8 @@ def pay():
         return jsonify({'success': False, 'message': 'No such holding'}), 200
 
     price = holding.normal
-    last_payment = user.transactions.filter_by(type=0).order_by(Transaction.time.desc()).first()
-    if last_payment and dt.now().timestamp() - last_payment.time.timestamp() <= holding.discount_seconds:
+    last_payment = user.transactions.filter_by(type=0).filter_by(amount=price).order_by(Transaction.time.desc()).first()
+    if last_payment and dt.datetime.now().timestamp() - last_payment.time.timestamp() <= holding.discount_seconds:
         price = holding.discount
     user.wallet -= price
 
